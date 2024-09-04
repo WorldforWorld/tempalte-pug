@@ -1,0 +1,9 @@
+mixin header(page='Home')
+    heade 
+        if block 
+            block 
+        else 
+            +navbar
+                +navbar-brand('GrandpaJS')
+                +nav(page, 'navbar-nav flex-row')
+                +btn('Sign in', 'dark')

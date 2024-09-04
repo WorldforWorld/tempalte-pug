@@ -1,0 +1,33 @@
+extends ../html/layout
+block variables
+    -
+        var accItems = [
+            {
+                headingContent: 'Item 4',
+                bodyContent: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi, ducimus!' 
+            },
+            {
+                headingContent: 'Item 5',
+                bodyContent: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi, ducimus!' 
+            },
+            {
+                headingContent: 'Item 6',
+                bodyContent: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi, ducimus!' 
+            },
+        ]
+    -var footItems_1 = [{'Home': 'index.html'}, {'Categories': 'categories.html'}, {'About': 'about.html'}]
+    -var footItems_2 = [{'Home': 'index.html'}, {'About': 'about.html'}, {'Categories':'categories.html'}]
+    -var footItems_3 = [{'Categories': 'categories.html'}, {'Home': 'index.html'}, {'About': 'about.html'}]
+block content
+    +header
+        +navbar
+            +navbar-brand('GrandpaJS')
+            +nav('Home', 'navbar-nav flex-row')
+            +btn('Sign in', 'dark')
+        +cl
+    main 
+        +categories('Cars')
+            +acc('cars')
+        +categories('Laptop')
+            +acc('laptop')
+    +footer(footItems_1, footItems_2, footItems_3)

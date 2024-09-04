@@ -1,0 +1,71 @@
+@import "settings";
+@import "variables";
+@import "fonts";
+@import "templates/header";
+@import "templates/footer";
+@import "templates/nav";
+
+/* Стили для меню и подменю */
+.menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  background-color: #f2f2f2;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item span,
+.menu-item a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.menu-item a:hover {
+  background-color: #e0e0e0;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item:hover .submenu {
+  display: block;
+}
+
+/* Стили для вложенных подменю */
+.submenu .menu-item {
+  position: relative;
+}
+
+.submenu .menu-item a {
+  background-color: #ddd;
+}
+
+.submenu .submenu {
+  top: 0;
+  left: 100%;
+  margin-left: 10px;
+}
+.nav-link.link-light.me-3 {
+  color: gray !important;
+}
+.nav-link.link-light.me-3.active {
+  color: #fff !important;
+}
