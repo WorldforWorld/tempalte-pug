@@ -3,7 +3,7 @@ mixin footer(...footerItems)
         if block 
             block 
         else 
-            .row 
+            .row(style="width: 100%;") 
                 - for (var x=0; x<footerItems.length; x++)
                     .col-4
                         +nav('', 'nav dark flex-column p-3', footerItems[x])
