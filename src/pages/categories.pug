@@ -1,0 +1,100 @@
+extends ../html/layout
+
+mixin demo(text='')
+    if text != ''
+        h3 Миксик: 
+            code(style="background: #e4e0e0;padding:5px; margin:5px;")= text
+    .demo(style="display:flex; gap:20px; align-items:flex-start; margin-bottom:30px;")
+        .preview(style="border:1px solid #ccc; padding:20px; flex:1;")
+            block
+        .code(style="background:#f9f9f9; padding:20px; flex:1; overflow:auto;")
+            pre
+                code
+
+
+
+block variables
+    -var footItems_1 = [{'Home': 'index.html'}, {'Categories': 'categories.html'}, {'About': 'about.html'}]
+    -var footItems_2 = [{'Home': 'index.html'}, {'About': 'about.html'}, {'Categories':'categories.html'}]
+    -var footItems_3 = [{'Categories': 'categories.html'}, {'Home': 'index.html'}, {'About': 'about.html'}]
+
+block content
+    +header
+        +navbar
+            +navbar-brand('GrandpaJS')
+            +nav('Home', 'navbar-nav flex-row')
+            +btn('Sign in', 'dark')
+    main.container 
+        h1 Структура блоков
+        // простые HTML примеры
+        div(style="margin:30px 0;padding:20px; border:1px solid #ccc;")
+            h2 Заголовки и текст
+            +demo()
+                h1 Hello world!
+
+            h2 Кнопки и ссылки
+            +demo()
+                button Hello world
+
+            h2 Аккордеоны
+            +demo('+acc("cars")')
+                +acc("cars")
+            h2 Несколько аккордеонов на странице
+            +demo('+acc("laptop")')
+                +acc("laptop")
+
+    +footer(footItems_1, footItems_2, footItems_3)
+
+
+    // JS для генерации кода
+    script.
+        document.addEventListener('DOMContentLoaded', () => {
+
+            function escapeHtml(str) {
+                return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+            }
+
+            function formatHTML(html) {
+                const tab = '  ';
+                let result = '';
+                let indent = 0;
+
+                const lines = html
+                .replace(/>\s*</g, '><')
+                .split('><')
+                .map((tag, i, arr) => {
+                    if (i === 0) return tag + '>';
+                    if (i === arr.length - 1) return '<' + tag;
+                    return '<' + tag + '>';
+                });
+
+                lines.forEach(line => {
+                const isClosing = line.match(/^<\/\w/);
+                const isSelfClosing = line.match(/\/>$/);
+                const isOpening = line.match(/^<\w[^>]*[^\/]>$/);
+
+                if (isClosing) indent--;
+
+                result += tab.repeat(indent) + line + '\n';
+
+                if (isOpening && !isSelfClosing) indent++;
+                });
+
+                return result.trim();
+            }
+
+            document.querySelectorAll('.demo').forEach(demo => {
+                const preview = demo.querySelector('.preview');
+                const code = demo.querySelector('.code code');
+
+                if (!preview || !code) return;
+
+                const raw = preview.innerHTML.trim();
+
+                const formatted = formatHTML(raw);
+                code.innerHTML = escapeHtml(formatted);
+            });
+        });
